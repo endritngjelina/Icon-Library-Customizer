@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IconCraft Studio - Professional Icon Customizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0078d4;
+            --primary-hover: #106ebe;
+            --secondary-color: #f3f2f1;
+            --text-primary: #323130;
+            --text-secondary: #605e5c;
+            --border-color: #edebe9;
+            --success-color: #107c10;
+            --warning-color: #ff8c00;
+            --error-color: #d13438;
+            --surface-white: #ffffff;
+            --surface-gray: #faf9f8;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+            --gradient-primary: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
+            --gradient-surface: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--surface-gray);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Main Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 320px 1fr 400px;
+            gap: 1.5rem;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--surface-white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            background: var(--surface-white);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0,120,212,0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-group {
+            margin-bottom: 2rem;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .filter-chip {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            background: var(--surface-white);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+            user-select: none;
+        }
+
+        .filter-chip:hover {
+            border-color: var(--primary-color);
+            background: rgba(0,120,212,0.05);
+        }
+
+        .filter-chip.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .color-picker-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .color-input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .color-picker {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .color-input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .preset-colors {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .preset-color {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .preset-color:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Icon Grid */
+        .icon-grid-container {
+            background: var(--surface-white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .grid-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--gradient-surface);
+        }
+
+        .grid-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .view-toggle {
+            display: flex;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .view-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: var(--surface-white);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+        }
+
+        .view-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .sort-select {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--surface-white);
+            cursor: pointer;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            min-height: 600px;
+        }
+
+        .icon-grid.list-view {
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+
+        .icon-item {
+            aspect-ratio: 1;
+            background: var(--surface-white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icon-item.list-view {
+            aspect-ratio: unset;
+            flex-direction: row;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        .icon-item:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .icon-item.selected {
+            border-color: var(--primary-color);
+            background: rgba(0,120,212,0.05);
+            box-shadow: 0 0 0 3px rgba(0,120,212,0.1);
+        }
+
+        .icon-svg {
+            width: 48px;
+            height: 48px;
+            transition: all 0.2s ease;
+        }
+
+        .icon-item.list-view .icon-svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .icon-name {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .icon-item.list-view .icon-name {
+            margin-top: 0;
+            flex: 1;
+            text-align: left;
+        }
+
+        /* Customization Panel */
+        .customization-panel {
+            background: var(--surface-white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .panel-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .panel-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .preview-container {
+            background: var(--surface-gray);
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .preview-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+        }
+
+        .preview-info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .size-slider-container {
+            margin: 1rem 0;
+        }
+
+        .size-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--border-color);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .size-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .size-display {
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .loading {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 100px;
+            right: 2rem;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: var(--surface-white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 0.5rem;
+            transform: translateX(400px);
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            border-left-color: var(--error-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 280px 1fr 350px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .sidebar, .customization-panel {
+                position: relative;
+                top: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .icon-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 0.75rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                        </svg>
+                    </div>
+                    IconCraft Studio
+                </div>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalIcons">2,847</div>
+                        <div>Total Icons</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="selectedCount">0</div>
+                        <div>Selected</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="downloadCount">0</div>
+                        <div>Downloaded</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="section-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                    Search & Filter
+                </div>
+
+                <div class="search-container">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search icons...">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                    </svg>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Categories</label>
+                    <div class="filter-options" id="categoryFilters">
+                        <div class="filter-chip active" data-category="all">All</div>
+                        <div class="filter-chip" data-category="ui">UI & Interface</div>
+                        <div class="filter-chip" data-category="business">Business</div>
+                        <div class="filter-chip" data-category="social">Social</div>
+                        <div class="filter-chip" data-category="media">Media</div>
+                        <div class="filter-chip" data-category="development">Development</div>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Style</label>
+                    <div class="filter-options" id="styleFilters">
+                        <div class="filter-chip active" data-style="outline">Outline</div>
+                        <div class="filter-chip" data-style="filled">Filled</div>
+                        <div class="filter-chip" data-style="duotone">Duotone</div>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Stroke Weight</label>
+                    <div class="filter-options" id="weightFilters">
+                        <div class="filter-chip" data-weight="1">Thin</div>
+                        <div class="filter-chip active" data-weight="2">Regular</div>
+                        <div class="filter-chip" data-weight="3">Bold</div>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Custom Color</label>
+                    <div class="color-picker-container">
+                        <div class="color-input-group">
+                            <input type="color" class="color-picker" id="colorPicker" value="#0078d4">
+                            <input type="text" class="color-input" id="colorInput" value="#0078d4" placeholder="#000000">
+                        </div>
+                        <div class="preset-colors" id="presetColors"></div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Icon Grid -->
+            <section class="icon-grid-container">
+                <div class="grid-header">
+                    <h2 class="section-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/>
+                        </svg>
+                        Icon Library
+                    </h2>
+                    <div class="grid-controls">
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="grid">Grid</button>
+                            <button class="view-btn" data-view="list">List</button>
+                        </div>
+                        <select class="sort-select" id="sortSelect">
+                            <option value="name">Sort by Name</option>
+                            <option value="category">Sort by Category</option>
+                            <option value="popularity">Sort by Popularity</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="icon-grid" id="iconGrid"></div>
+            </section>
+
+            <!-- Customization Panel -->
+            <aside class="customization-panel">
+                <div class="section-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    Customization
+                </div>
+
+                <div class="panel-section">
+                    <div class="preview-container" id="previewContainer">
+                        <div class="preview-info">Select an icon to customize</div>
+                    </div>
+                    
+                    <div class="size-slider-container">
+                        <div class="size-display" id="sizeDisplay">Size: 64px</div>
+                        <input type="range" class="size-slider" id="sizeSlider" min="16" max="256" value="64" step="8">
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h4 class="filter-label">Export Options</h4>
+                    <div class="filter-options" id="formatOptions">
+                        <div class="filter-chip active" data-format="svg">SVG</div>
+                        <div class="filter-chip" data-format="png">PNG</div>
+                        <div class="filter-chip" data-format="pdf">PDF</div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="downloadBtn" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                        Download Selected
+                    </button>
+                    <button class="btn btn-secondary" id="batchDownloadBtn" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
+                        </svg>
+                        Batch Download
+                    </button>
+                    <button class="btn btn-secondary" id="clearSelectionBtn" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                        Clear Selection
+                    </button>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Application State
+        const appState = {
+            icons: [],
+            selectedIcons: new Set(),
+            currentFilters: {
+                search: '',
+                category: 'all',
+                style: 'outline',
+                weight: '2'
+            },
+            currentColor: '#0078d4',
+            currentSize: 64,
+            currentFormat: 'svg',
+            currentView: 'grid',
+            currentSort: 'name',
+            downloadCount: 0
+        };
+
+        // Sample icon data (in a real app, this would come from an API)
+        const iconData = [
+            { id: 1, name: 'home', category: 'ui', style: 'outline', popularity: 95 },
+            { id: 2, name: 'user', category: 'ui', style: 'outline', popularity: 88 },
+            { id: 3, name: 'settings', category: 'ui', style: 'outline', popularity: 76 },
+            { id: 4, name: 'heart', category: 'social', style: 'outline', popularity: 92 },
+            { id: 5, name: 'star', category: 'ui', style: 'outline', popularity: 85 },
+            { id: 6, name: 'download', category: 'ui', style: 'outline', popularity: 73 },
+            { id: 7, name: 'upload', category: 'ui', style: 'outline', popularity: 71 },
+            { id: 8, name: 'mail', category: 'business', style: 'outline', popularity: 89 },
+            { id: 9, name: 'phone', category: 'business', style: 'outline', popularity: 67 },
+            { id: 10, name: 'camera', category: 'media', style: 'outline', popularity: 78 },
+            { id: 11, name: 'video', category: 'media', style: 'outline', popularity: 82 },
+            { id: 12, name: 'music', category: 'media', style: 'outline', popularity: 74 },
+            { id: 13, name: 'code', category: 'development', style: 'outline', popularity: 68 },
+            { id: 14, name: 'database', category: 'development', style: 'outline', popularity: 65 },
+            { id: 15, name: 'server', category: 'development', style: 'outline', popularity: 63 },
+            { id: 16, name: 'search', category: 'ui', style: 'outline', popularity: 91 },
+            { id: 17, name: 'menu', category: 'ui', style: 'outline', popularity: 86 },
+            { id: 18, name: 'close', category: 'ui', style: 'outline', popularity: 84 },
+            { id: 19, name: 'check', category: 'ui', style: 'outline', popularity: 87 },
+            { id: 20, name: 'arrow-right', category: 'ui', style: 'outline', popularity: 79 }
+        ];
+
+        // SVG Templates for different icons
+        const iconSVGs = {
+            'home': '<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>',
+            'user': '<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>',
+            'settings': '<path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>',
+            'heart': '<path d="M12,21.35l-1.45-1.32C5.4,15.36,2,12.28,2,8.5 C2,5.42,4.42,3,7.5,3c1.74,0,3.41,0.81,4.5,2.09C13.09,3.81,14.76,3,16.5,3 C19.58,3,22,5.42,22,8.5c0,3.78-3.4,6.86-8.55,11.54L12,21.35z"/>',
+            'star': '<path d="M12,17.27L18.18,21l-1.64-7.03L22,9.24l-7.19-0.61L12,2L9.19,8.63L2,9.24l5.46,4.73L5.82,21L12,17.27z"/>',
+            'download': '<path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>',
+            'upload': '<path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>',
+            'mail': '<path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>',
+            'phone': '<path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/>',
+            'camera': '<circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>',
+            'video': '<path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>',
+            'music': '<path d="M21 3v12.5c0 .83-.67 1.5-1.5 1.5S18 16.33 18 15.5 18.67 14 19.5 14s1.5.67 1.5 1.5V6H9v10.5c0 .83-.67 1.5-1.5 1.5S6 17.33 6 16.5 6.67 15 7.5 15s1.5.67 1.5 1.5V5c0-.55.45-1 1-1h10c.55 0 1 .45 1 1v-2z"/>',
+            'code': '<path d="M9.4,16.6L4.8,12l4.6-4.6L8,6l-6,6l6,6L9.4,16.6z M14.6,16.6l4.6-4.6l-4.6-4.6L16,6l6,6l-6,6L14.6,16.6z"/>',
+            'database': '<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>',
+            'server': '<rect x="2" y="3" width="20" height="4" rx="1" ry="1"></rect><rect x="2" y="9" width="20" height="4" rx="1" ry="1"></rect><rect x="2" y="15" width="20" height="4" rx="1" ry="1"></rect><line x1="6" y1="5" x2="6.01" y2="5"></line><line x1="6" y1="11" x2="6.01" y2="11"></line><line x1="6" y1="17" x2="6.01" y2="17"></line>',
+            'search': '<circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path>',
+            'menu': '<line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line>',
+            'close': '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>',
+            'check': '<polyline points="20,6 9,17 4,12"></polyline>',
+            'arrow-right': '<line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12,5 19,12 12,19"></polyline>'
+        };
+
+        // Color presets
+        const colorPresets = [
+            '#0078d4', '#107c10', '#d13438', '#ff8c00',
+            '#5c2d91', '#0099bc', '#e81123', '#00188f',
+            '#324f6b', '#881798', '#498205', '#515c6b',
+            '#00bcf2', '#008575', '#bad80a', '#00b7c3',
+            '#68217a', '#00cc6a', '#ffb900', '#ff4b4b'
+        ];
+
+        // Initialize the application
+        function initApp() {
+            appState.icons = [...iconData];
+            setupEventListeners();
+            setupColorPresets();
+            renderIcons();
+            showToast('Welcome to IconCraft Studio! Select icons to customize and download.', 'success');
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+            
+            // Filter chips
+            document.getElementById('categoryFilters').addEventListener('click', handleCategoryFilter);
+            document.getElementById('styleFilters').addEventListener('click', handleStyleFilter);
+            document.getElementById('weightFilters').addEventListener('click', handleWeightFilter);
+            
+            // Color picker
+            document.getElementById('colorPicker').addEventListener('input', handleColorChange);
+            document.getElementById('colorInput').addEventListener('input', handleColorInputChange);
+            document.getElementById('presetColors').addEventListener('click', handlePresetColorClick);
+            
+            // Size slider
+            document.getElementById('sizeSlider').addEventListener('input', handleSizeChange);
+            
+            // Format options
+            document.getElementById('formatOptions').addEventListener('click', handleFormatChange);
+            
+            // View toggle
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', handleViewChange);
+            });
+            
+            // Sort dropdown
+            document.getElementById('sortSelect').addEventListener('change', handleSortChange);
+            
+            // Action buttons
+            document.getElementById('downloadBtn').addEventListener('click', handleDownload);
+            document.getElementById('batchDownloadBtn').addEventListener('click', handleBatchDownload);
+            document.getElementById('clearSelectionBtn').addEventListener('click', handleClearSelection);
+            
+            // Icon grid click handling
+            document.getElementById('iconGrid').addEventListener('click', handleIconSelection);
+        }
+
+        // Setup color presets
+        function setupColorPresets() {
+            const container = document.getElementById('presetColors');
+            colorPresets.forEach(color => {
+                const colorDiv = document.createElement('div');
+                colorDiv.className = 'preset-color';
+                colorDiv.style.backgroundColor = color;
+                colorDiv.title = color;
+                colorDiv.dataset.color = color;
+                container.appendChild(colorDiv);
+            });
+        }
+
+        // Handle search
+        function handleSearch(e) {
+            appState.currentFilters.search = e.target.value.toLowerCase();
+            renderIcons();
+        }
+
+        // Handle category filter
+        function handleCategoryFilter(e) {
+            if (e.target.classList.contains('filter-chip')) {
+                document.querySelectorAll('#categoryFilters .filter-chip').forEach(chip => 
+                    chip.classList.remove('active'));
+                e.target.classList.add('active');
+                appState.currentFilters.category = e.target.dataset.category;
+                renderIcons();
+            }
+        }
+
+        // Handle style filter
+        function handleStyleFilter(e) {
+            if (e.target.classList.contains('filter-chip')) {
+                document.querySelectorAll('#styleFilters .filter-chip').forEach(chip => 
+                    chip.classList.remove('active'));
+                e.target.classList.add('active');
+                appState.currentFilters.style = e.target.dataset.style;
+                renderIcons();
+            }
+        }
+
+        // Handle weight filter
+        function handleWeightFilter(e) {
+            if (e.target.classList.contains('filter-chip')) {
+                document.querySelectorAll('#weightFilters .filter-chip').forEach(chip => 
+                    chip.classList.remove('active'));
+                e.target.classList.add('active');
+                appState.currentFilters.weight = e.target.dataset.weight;
+                renderIcons();
+            }
+        }
+
+        // Handle color change
+        function handleColorChange(e) {
+            appState.currentColor = e.target.value;
+            document.getElementById('colorInput').value = e.target.value;
+            updatePreview();
+        }
+
+        // Handle color input change
+        function handleColorInputChange(e) {
+            const color = e.target.value;
+            if (isValidColor(color)) {
+                appState.currentColor = color;
+                document.getElementById('colorPicker').value = color;
+                updatePreview();
+            }
+        }
+
+        // Handle preset color click
+        function handlePresetColorClick(e) {
+            if (e.target.classList.contains('preset-color')) {
+                const color = e.target.dataset.color;
+                appState.currentColor = color;
+                document.getElementById('colorPicker').value = color;
+                document.getElementById('colorInput').value = color;
+                updatePreview();
+            }
+        }
+
+        // Handle size change
+        function handleSizeChange(e) {
+            appState.currentSize = parseInt(e.target.value);
+            document.getElementById('sizeDisplay').textContent = `Size: ${appState.currentSize}px`;
+            updatePreview();
+        }
+
+        // Handle format change
+        function handleFormatChange(e) {
+            if (e.target.classList.contains('filter-chip')) {
+                document.querySelectorAll('#formatOptions .filter-chip').forEach(chip => 
+                    chip.classList.remove('active'));
+                e.target.classList.add('active');
+                appState.currentFormat = e.target.dataset.format;
+            }
+        }
+
+        // Handle view change
+        function handleViewChange(e) {
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+            appState.currentView = e.target.dataset.view;
+            
+            const iconGrid = document.getElementById('iconGrid');
+            iconGrid.classList.toggle('list-view', appState.currentView === 'list');
+            
+            // Re-render icons with new view
+            renderIcons();
+        }
+
+        // Handle sort change
+        function handleSortChange(e) {
+            appState.currentSort = e.target.value;
+            renderIcons();
+        }
+
+        // Handle icon selection
+        function handleIconSelection(e) {
+            const iconItem = e.target.closest('.icon-item');
+            if (iconItem) {
+                const iconId = parseInt(iconItem.dataset.iconId);
+                const icon = appState.icons.find(i => i.id === iconId);
+                
+                if (appState.selectedIcons.has(iconId)) {
+                    appState.selectedIcons.delete(iconId);
+                    iconItem.classList.remove('selected');
+                } else {
+                    appState.selectedIcons.add(iconId);
+                    iconItem.classList.add('selected');
+                }
+                
+                updateUI();
+                updatePreview(icon);
+            }
+        }
+
+        // Handle download
+        function handleDownload() {
+            if (appState.selectedIcons.size === 0) return;
+            
+            const selectedIcon = appState.icons.find(icon => 
+                appState.selectedIcons.has(icon.id));
+            
+            if (selectedIcon) {
+                downloadIcon(selectedIcon);
+                appState.downloadCount++;
+                updateUI();
+                showToast(`Downloaded ${selectedIcon.name}.${appState.currentFormat}`, 'success');
+            }
+        }
+
+        // Handle batch download
+        function handleBatchDownload() {
+            if (appState.selectedIcons.size === 0) return;
+            
+            const selectedIcons = appState.icons.filter(icon => 
+                appState.selectedIcons.has(icon.id));
+            
+            selectedIcons.forEach(icon => {
+                setTimeout(() => downloadIcon(icon), Math.random() * 1000);
+            });
+            
+            appState.downloadCount += selectedIcons.length;
+            updateUI();
+            showToast(`Batch download started for ${selectedIcons.length} icons`, 'success');
+        }
+
+        // Handle clear selection
+        function handleClearSelection() {
+            appState.selectedIcons.clear();
+            document.querySelectorAll('.icon-item.selected').forEach(item => 
+                item.classList.remove('selected'));
+            updateUI();
+            updatePreview();
+            showToast('Selection cleared', 'success');
+        }
+
+        // Filter and sort icons
+        function getFilteredIcons() {
+            let filtered = appState.icons.filter(icon => {
+                const matchesSearch = icon.name.toLowerCase().includes(appState.currentFilters.search);
+                const matchesCategory = appState.currentFilters.category === 'all' || 
+                                      icon.category === appState.currentFilters.category;
+                const matchesStyle = icon.style === appState.currentFilters.style;
+                
+                return matchesSearch && matchesCategory && matchesStyle;
+            });
+            
+            // Sort icons
+            filtered.sort((a, b) => {
+                switch (appState.currentSort) {
+                    case 'name':
+                        return a.name.localeCompare(b.name);
+                    case 'category':
+                        return a.category.localeCompare(b.category) || a.name.localeCompare(b.name);
+                    case 'popularity':
+                        return b.popularity - a.popularity;
+                    default:
+                        return 0;
+                }
+            });
+            
+            return filtered;
+        }
+
+        // Render icons
+        function renderIcons() {
+            const iconGrid = document.getElementById('iconGrid');
+            const filteredIcons = getFilteredIcons();
+            
+            if (filteredIcons.length === 0) {
+                iconGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--text-secondary);">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom: 1rem; opacity: 0.5;">
+                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                        <h3>No icons found</h3>
+                        <p>Try adjusting your search or filter criteria</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            iconGrid.innerHTML = filteredIcons.map(icon => {
+                const isSelected = appState.selectedIcons.has(icon.id);
+                const svgPath = iconSVGs[icon.name] || iconSVGs['star'];
+                
+                return `
+                    <div class="icon-item ${appState.currentView === 'list' ? 'list-view' : ''} ${isSelected ? 'selected' : ''} fade-in" 
+                         data-icon-id="${icon.id}">
+                        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="${appState.currentColor}" 
+                             stroke-width="${appState.currentFilters.weight}" stroke-linecap="round" stroke-linejoin="round">
+                            ${svgPath}
+                        </svg>
+                        <div class="icon-name">${icon.name.replace('-', ' ')}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Update total icons count
+            document.getElementById('totalIcons').textContent = filteredIcons.length.toLocaleString();
+        }
+
+        // Update preview
+        function updatePreview(selectedIcon = null) {
+            const previewContainer = document.getElementById('previewContainer');
+            
+            if (appState.selectedIcons.size === 0) {
+                previewContainer.innerHTML = `
+                    <div class="preview-info">Select an icon to customize</div>
+                `;
+                return;
+            }
+            
+            const icon = selectedIcon || appState.icons.find(i => appState.selectedIcons.has(i.id));
+            if (!icon) return;
+            
+            const svgPath = iconSVGs[icon.name] || iconSVGs['star'];
+            
+            previewContainer.innerHTML = `
+                <svg class="preview-icon" viewBox="0 0 24 24" fill="none" 
+                     stroke="${appState.currentColor}" 
+                     stroke-width="${appState.currentFilters.weight}" 
+                     stroke-linecap="round" stroke-linejoin="round"
+                     style="width: ${appState.currentSize}px; height: ${appState.currentSize}px;">
+                    ${svgPath}
+                </svg>
+                <div class="preview-info">
+                    <strong>${icon.name.replace('-', ' ')}</strong><br>
+                    ${appState.currentSize}px • ${appState.currentColor} • ${appState.currentFormat.toUpperCase()}
+                </div>
+            `;
+        }
+
+        // Update UI elements
+        function updateUI() {
+            const selectedCount = appState.selectedIcons.size;
+            
+            document.getElementById('selectedCount').textContent = selectedCount;
+            document.getElementById('downloadCount').textContent = appState.downloadCount;
+            
+            const downloadBtn = document.getElementById('downloadBtn');
+            const batchDownloadBtn = document.getElementById('batchDownloadBtn');
+            const clearSelectionBtn = document.getElementById('clearSelectionBtn');
+            
+            downloadBtn.disabled = selectedCount === 0;
+            batchDownloadBtn.disabled = selectedCount === 0;
+            clearSelectionBtn.disabled = selectedCount === 0;
+            
+            // Update button text for batch download
+            if (selectedCount > 1) {
+                batchDownloadBtn.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
+                    </svg>
+                    Download All (${selectedCount})
+                `;
+            } else {
+                batchDownloadBtn.innerHTML = `
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
+                    </svg>
+                    Batch Download
+                `;
+            }
+        }
+
+        // Download icon
+        function downloadIcon(icon) {
+            const svgPath = iconSVGs[icon.name] || iconSVGs['star'];
+            
+            let content;
+            let mimeType;
+            let filename;
+            
+            switch (appState.currentFormat) {
+                case 'svg':
+                    content = `<svg width="${appState.currentSize}" height="${appState.currentSize}" viewBox="0 0 24 24" fill="none" stroke="${appState.currentColor}" stroke-width="${appState.currentFilters.weight}" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">${svgPath}</svg>`;
+                    mimeType = 'image/svg+xml';
+                    filename = `${icon.name}.svg`;
+                    break;
+                case 'png':
+                    // For PNG, we'd need to convert SVG to PNG using canvas
+                    // This is a simplified implementation
+                    content = generatePNG(icon, svgPath);
+                    mimeType = 'image/png';
+                    filename = `${icon.name}.png`;
+                    break;
+                case 'pdf':
+                    content = generatePDF(icon, svgPath);
+                    mimeType = 'application/pdf';
+                    filename = `${icon.name}.pdf`;
+                    break;
+                default:
+                    return;
+            }
+            
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Generate PNG (simplified - in real implementation, you'd use canvas)
+        function generatePNG(icon, svgPath) {
+            return `PNG placeholder for ${icon.name}`;
+        }
+
+        // Generate PDF (simplified - in real implementation, you'd use a PDF library)
+        function generatePDF(icon, svgPath) {
+            return `PDF placeholder for ${icon.name}`;
+        }
+
+        // Validate color
+        function isValidColor(color) {
+            return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color);
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            toastContainer.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.add('show'), 100);
+            
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
