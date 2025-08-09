@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IconForge - Professional Icon Library</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --dark-bg: #0f1419;
+            --card-bg: #1a202c;
+            --border-color: #2d3748;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --accent-blue: #4299e1;
+            --accent-purple: #805ad5;
+            --success: #48bb78;
+            --warning: #ed8936;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr 350px;
+            gap: 2rem;
+            padding: 2rem 0;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            background: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-group {
+            margin-bottom: 2rem;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Icon Grid */
+        .icon-grid-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .grid-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .grid-stats {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--dark-bg);
+            border-radius: 6px;
+            padding: 2px;
+        }
+
+        .view-btn {
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .view-btn.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            background: var(--dark-bg);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .icon-item:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(66, 153, 225, 0.15);
+        }
+
+        .icon-item.selected {
+            border-color: var(--accent-purple);
+            background: rgba(128, 90, 213, 0.1);
+        }
+
+        .icon-preview {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .icon-name {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
+            word-break: break-word;
+        }
+
+        /* Customization Panel */
+        .customization-panel {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .panel-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .panel-content {
+            padding: 1.5rem;
+        }
+
+        .preview-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--dark-bg);
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
+        }
+
+        .preview-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .slider-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            background: var(--dark-bg);
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 8px rgba(66, 153, 225, 0.1);
+        }
+
+        .color-picker-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .color-input {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: none;
+        }
+
+        .color-value {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            background: var(--dark-bg);
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            flex: 1;
+        }
+
+        .preset-colors {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .preset-color {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .preset-color:hover {
+            transform: scale(1.1);
+            border-color: white;
+        }
+
+        .style-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .style-btn {
+            padding: 0.75rem;
+            background: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .style-btn:hover, .style-btn.active {
+            background: var(--accent-purple);
+            border-color: var(--accent-purple);
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 280px 1fr 300px;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            
+            .sidebar, .customization-panel {
+                position: static;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        .batch-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .batch-btn {
+            padding: 0.5rem 1rem;
+            background: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+        }
+
+        .batch-btn:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .selected-count {
+            background: var(--accent-purple);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">IconForge</div>
+                <div class="header-actions">
+                    <span id="selectedCount" class="selected-count" style="display: none;">0 selected</span>
+                    <button class="btn btn-secondary" onclick="exportCollection()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7,10 12,15 17,10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export Collection
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar fade-in-up">
+                <div class="search-container">
+                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" class="search-input" placeholder="Search icons..." id="searchInput">
+                </div>
+
+                <div class="filter-group">
+                    <h3 class="section-title">Categories</h3>
+                    <div class="filter-options" id="categoryFilters">
+                        <button class="filter-btn active" data-category="all">All</button>
+                        <button class="filter-btn" data-category="interface">Interface</button>
+                        <button class="filter-btn" data-category="arrows">Arrows</button>
+                        <button class="filter-btn" data-category="media">Media</button>
+                        <button class="filter-btn" data-category="social">Social</button>
+                        <button class="filter-btn" data-category="business">Business</button>
+                        <button class="filter-btn" data-category="weather">Weather</button>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h3 class="section-title">Style</h3>
+                    <div class="filter-options" id="styleFilters">
+                        <button class="filter-btn active" data-style="all">All Styles</button>
+                        <button class="filter-btn" data-style="outline">Outline</button>
+                        <button class="filter-btn" data-style="filled">Filled</button>
+                        <button class="filter-btn" data-style="duotone">Duotone</button>
+                    </div>
+                </div>
+
+                <div class="batch-actions">
+                    <button class="batch-btn" onclick="selectAll()">Select All</button>
+                    <button class="batch-btn" onclick="clearSelection()">Clear</button>
+                </div>
+            </aside>
+
+            <!-- Icon Grid -->
+            <main class="icon-grid-container fade-in-up">
+                <div class="grid-header">
+                    <div>
+                        <h2 class="section-title" style="margin: 0;">Icon Library</h2>
+                        <div class="grid-stats" id="gridStats">2,847 icons available</div>
+                    </div>
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                        </button>
+                        <button class="view-btn" data-view="list">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="icon-grid" id="iconGrid"></div>
+            </main>
+
+            <!-- Customization Panel -->
+            <aside class="customization-panel fade-in-up">
+                <div class="panel-header">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"></path>
+                    </svg>
+                    <h3 class="section-title" style="margin: 0;">Customize</h3>
+                </div>
+
+                <div class="panel-content">
+                    <div class="preview-section">
+                        <div class="preview-icon" id="previewIcon">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </div>
+                        <div id="previewName" style="color: var(--text-secondary); font-size: 0.9rem;">Select an icon to customize</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Size: <span id="sizeValue">32px</span></label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="sizeSlider" min="16" max="128" value="32">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Stroke Width: <span id="strokeValue">2px</span></label>
+                        <div class="slider-container">
+                            <input type="range" class="slider" id="strokeSlider" min="0.5" max="4" step="0.5" value="2">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Color</label>
+                        <div class="color-picker-container">
+                            <input type="color" class="color-input" id="colorPicker" value="#4299e1">
+                            <input type="text" class="color-value" id="colorValue" value="#4299e1">
+                        </div>
+                        <div class="preset-colors">
+                            <div class="preset-color" style="background: #4299e1;" data-color="#4299e1"></div>
+                            <div class="preset-color" style="background: #805ad5;" data-color="#805ad5"></div>
+                            <div class="preset-color" style="background: #48bb78;" data-color="#48bb78"></div>
+                            <div class="preset-color" style="background: #ed8936;" data-color="#ed8936"></div>
+                            <div class="preset-color" style="background: #f56565;" data-color="#f56565"></div>
+                            <div class="preset-color" style="background: #38b2ac;" data-color="#38b2ac"></div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Style</label>
+                        <div class="style-options">
+                            <button class="style-btn active" data-style="stroke">Stroke</button>
+                            <button class="style-btn" data-style="fill">Fill</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="downloadSVG()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7,10 12,15 17,10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Download SVG
+                        </button>
+                        <button class="btn btn-secondary" onclick="copyToClipboard()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            Copy Code
+                        </button>
+                        <button class="btn btn-secondary" onclick="addToCollection()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"></path>
+                            </svg>
+                            Add to Collection
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        // Icon data structure
+        const iconLibrary = {
+            interface: [
+                { name: 'home', path: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z<polyline points="9,22 9,12 15,12 15,22"></polyline>' },
+                { name: 'settings', path: 'M12 1v6m0 6v6m11-7h-6m-6 0H1<circle cx="12" cy="12" r="3"></circle>' },
+                { name: 'menu', path: 'M3 12h18m-9 6h9M3 6h18' },
+                { name: 'search', path: 'M11 19c4.4 0 8-3.6 8-8s-3.6-8-8-8-8 3.6-8 8 3.6 8 8 8z<path d="m21 21-4.35-4.35"></path>' },
+                { name: 'user', path: 'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2<circle cx="12" cy="7" r="4"></circle>' },
+                { name: 'bell', path: 'M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9<path d="M13.73 21c-.51.28-1.06.28-1.46 0"></path>' }
+            ],
+            arrows: [
+                { name: 'arrow-up', path: 'M18 15l-6-6-6 6' },
+                { name: 'arrow-down', path: 'M6 9l6 6 6-6' },
+                { name: 'arrow-left', path: 'M19 12H5<path d="M12 19l-7-7 7-7"></path>' },
+                { name: 'arrow-right', path: 'M5 12h14<path d="M12 5l7 7-7 7"></path>' },
+                { name: 'chevron-up', path: 'M18 15l-6-6-6 6' },
+                { name: 'chevron-down', path: 'M6 9l6 6 6-6' }
+            ],
+            media: [
+                { name: 'play', path: 'M8 5v14l11-7z' },
+                { name: 'pause', path: 'M6 4h4v16H6z<rect x="14" y="4" width="4" height="16"></rect>' },
+                { name: 'stop', path: 'M5 5h14v14H5z' },
+                { name: 'volume', path: 'M11 5L6 9H2v6h4l5 4V5z<path d="M19.07 4.93a10 10 0 0 1 0 14.14m-2.12-2.12a6 6 0 0 0 0-8.49"></path>' },
+                { name: 'camera', path: 'M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z<circle cx="12" cy="13" r="4"></circle>' },
+                { name: 'image', path: 'M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2z<polyline points="8.5,11 13,15.5 16.5,12 21,16.5 21,5 3,5 3,19"></polyline>' }
+            ],
+            social: [
+                { name: 'heart', path: 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z' },
+                { name: 'star', path: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
+                { name: 'thumbs-up', path: 'M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3' },
+                { name: 'share', path: 'M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8<polyline points="16,6 12,2 8,6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line>' },
+                { name: 'message', path: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z' },
+                { name: 'mail', path: 'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z<polyline points="22,6 12,13 2,6"></polyline>' }
+            ],
+            business: [
+                { name: 'briefcase', path: 'M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m4 0h4a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4' },
+                { name: 'calendar', path: 'M3 4h18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z<polyline points="11,1 11,7"></polyline><polyline points="13,1 13,7"></polyline><line x1="3" y1="11" x2="21" y2="11"></line>' },
+                { name: 'clock', path: 'M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z<polyline points="12,6 12,12 16,14"></polyline>' },
+                { name: 'dollar-sign', path: 'M12 1v22<path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>' },
+                { name: 'trending-up', path: 'M23 6l-9.5 9.5-5-5L1 18<polyline points="17,6 23,6 23,12"></polyline>' },
+                { name: 'pie-chart', path: 'M21.21 15.89A10 10 0 1 1 8 2.83<path d="M22 12A10 10 0 0 0 12 2v10z"></path>' }
+            ],
+            weather: [
+                { name: 'sun', path: 'M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42<circle cx="12" cy="12" r="5"></circle>' },
+                { name: 'moon', path: 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z' },
+                { name: 'cloud', path: 'M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z' },
+                { name: 'cloud-rain', path: 'M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25<line x1="8" y1="19" x2="8" y2="21"></line><line x1="8" y1="13" x2="8" y2="15"></line><line x1="16" y1="19" x2="16" y2="21"></line><line x1="16" y1="13" x2="16" y2="15"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="12" y1="15" x2="12" y2="17"></line>' },
+                { name: 'snowflake', path: 'M2.5 16.88a1 1 0 0 1-.32-1.43l9-13.02a1 1 0 0 1 1.64 0l9 13.02a1 1 0 0 1-.32 1.43l-8.36 4.84a1 1 0 0 1-.96 0z<polyline points="12,2 12,22"></polyline><polyline points="17,7 7,17"></polyline><polyline points="7,7 17,17"></polyline>' },
+                { name: 'wind', path: 'M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2' }
+            ]
+        };
+
+        // Application state
+        let selectedIcon = null;
+        let selectedIcons = new Set();
+        let currentCategory = 'all';
+        let currentStyle = 'all';
+        let currentSearch = '';
+        let customizations = {
+            size: 32,
+            strokeWidth: 2,
+            color: '#4299e1',
+            style: 'stroke'
+        };
+
+        // Initialize the application
+        function init() {
+            renderIcons();
+            setupEventListeners();
+            updatePreview();
+        }
+
+        // Setup all event listeners
+        function setupEventListeners() {
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                currentSearch = e.target.value.toLowerCase();
+                renderIcons();
+            });
+
+            // Category filters
+            document.getElementById('categoryFilters').addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-btn')) {
+                    document.querySelectorAll('#categoryFilters .filter-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentCategory = e.target.dataset.category;
+                    renderIcons();
+                }
+            });
+
+            // Style filters
+            document.getElementById('styleFilters').addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-btn')) {
+                    document.querySelectorAll('#styleFilters .filter-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentStyle = e.target.dataset.style;
+                    renderIcons();
+                }
+            });
+
+            // View toggle
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    const view = e.target.dataset.view;
+                    const grid = document.getElementById('iconGrid');
+                    if (view === 'list') {
+                        grid.style.gridTemplateColumns = '1fr';
+                        grid.querySelectorAll('.icon-item').forEach(item => {
+                            item.style.flexDirection = 'row';
+                            item.style.justifyContent = 'flex-start';
+                            item.style.padding = '1rem 1.5rem';
+                        });
+                    } else {
+                        grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(80px, 1fr))';
+                        grid.querySelectorAll('.icon-item').forEach(item => {
+                            item.style.flexDirection = 'column';
+                            item.style.justifyContent = 'center';
+                            item.style.padding = '1rem';
+                        });
+                    }
+                });
+            });
+
+            // Customization controls
+            document.getElementById('sizeSlider').addEventListener('input', (e) => {
+                customizations.size = parseInt(e.target.value);
+                document.getElementById('sizeValue').textContent = `${customizations.size}px`;
+                updatePreview();
+            });
+
+            document.getElementById('strokeSlider').addEventListener('input', (e) => {
+                customizations.strokeWidth = parseFloat(e.target.value);
+                document.getElementById('strokeValue').textContent = `${customizations.strokeWidth}px`;
+                updatePreview();
+            });
+
+            document.getElementById('colorPicker').addEventListener('input', (e) => {
+                customizations.color = e.target.value;
+                document.getElementById('colorValue').value = e.target.value;
+                updatePreview();
+            });
+
+            document.getElementById('colorValue').addEventListener('input', (e) => {
+                if (isValidColor(e.target.value)) {
+                    customizations.color = e.target.value;
+                    document.getElementById('colorPicker').value = e.target.value;
+                    updatePreview();
+                }
+            });
+
+            // Preset colors
+            document.querySelectorAll('.preset-color').forEach(color => {
+                color.addEventListener('click', (e) => {
+                    const colorValue = e.target.dataset.color;
+                    customizations.color = colorValue;
+                    document.getElementById('colorPicker').value = colorValue;
+                    document.getElementById('colorValue').value = colorValue;
+                    updatePreview();
+                });
+            });
+
+            // Style buttons
+            document.querySelectorAll('.style-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    customizations.style = e.target.dataset.style;
+                    updatePreview();
+                });
+            });
+        }
+
+        // Render icons based on current filters
+        function renderIcons() {
+            const grid = document.getElementById('iconGrid');
+            const stats = document.getElementById('gridStats');
+            grid.innerHTML = '';
+
+            let filteredIcons = [];
+            
+            // Get icons based on category filter
+            if (currentCategory === 'all') {
+                filteredIcons = Object.values(iconLibrary).flat();
+            } else {
+                filteredIcons = iconLibrary[currentCategory] || [];
+            }
+
+            // Apply search filter
+            if (currentSearch) {
+                filteredIcons = filteredIcons.filter(icon => 
+                    icon.name.toLowerCase().includes(currentSearch)
+                );
+            }
+
+            // Render filtered icons
+            filteredIcons.forEach((icon, index) => {
+                const iconElement = createIconElement(icon, index);
+                grid.appendChild(iconElement);
+            });
+
+            // Update stats
+            stats.textContent = `${filteredIcons.length} icons available`;
+
+            // Add stagger animation
+            setTimeout(() => {
+                grid.querySelectorAll('.icon-item').forEach((item, index) => {
+                    item.style.animationDelay = `${index * 0.05}s`;
+                    item.classList.add('fade-in-up');
+                });
+            }, 50);
+        }
+
+        // Create individual icon element
+        function createIconElement(icon, index) {
+            const div = document.createElement('div');
+            div.className = 'icon-item';
+            div.dataset.iconName = icon.name;
+            div.dataset.iconPath = icon.path;
+            
+            if (selectedIcons.has(`${icon.name}-${index}`)) {
+                div.classList.add('selected');
+            }
+
+            div.innerHTML = `
+                <svg class="icon-preview" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="${icon.path}"></path>
+                </svg>
+                <div class="icon-name">${icon.name}</div>
+            `;
+
+            div.addEventListener('click', (e) => {
+                if (e.ctrlKey || e.metaKey) {
+                    // Multi-select mode
+                    const iconId = `${icon.name}-${index}`;
+                    if (selectedIcons.has(iconId)) {
+                        selectedIcons.delete(iconId);
+                        div.classList.remove('selected');
+                    } else {
+                        selectedIcons.add(iconId);
+                        div.classList.add('selected');
+                    }
+                    updateSelectedCount();
+                } else {
+                    // Single select mode
+                    document.querySelectorAll('.icon-item').forEach(item => item.classList.remove('selected'));
+                    div.classList.add('selected');
+                    selectedIcon = icon;
+                    updatePreview();
+                }
+            });
+
+            return div;
+        }
+
+        // Update the preview with current customizations
+        function updatePreview() {
+            const previewIcon = document.getElementById('previewIcon');
+            const previewName = document.getElementById('previewName');
+
+            if (selectedIcon) {
+                const svg = previewIcon.querySelector('svg');
+                svg.setAttribute('width', customizations.size);
+                svg.setAttribute('height', customizations.size);
+                svg.setAttribute('stroke-width', customizations.strokeWidth);
+                
+                if (customizations.style === 'fill') {
+                    svg.setAttribute('fill', customizations.color);
+                    svg.setAttribute('stroke', 'none');
+                } else {
+                    svg.setAttribute('fill', 'none');
+                    svg.setAttribute('stroke', customizations.color);
+                }
+
+                svg.querySelector('path').setAttribute('d', selectedIcon.path);
+                previewName.textContent = selectedIcon.name;
+            }
+        }
+
+        // Update selected icons count
+        function updateSelectedCount() {
+            const countElement = document.getElementById('selectedCount');
+            const count = selectedIcons.size;
+            
+            if (count > 0) {
+                countElement.textContent = `${count} selected`;
+                countElement.style.display = 'inline-block';
+            } else {
+                countElement.style.display = 'none';
+            }
+        }
+
+        // Utility functions
+        function isValidColor(color) {
+            const s = new Option().style;
+            s.color = color;
+            return s.color !== '';
+        }
+
+        function selectAll() {
+            const visibleIcons = document.querySelectorAll('.icon-item');
+            selectedIcons.clear();
+            visibleIcons.forEach((item, index) => {
+                const iconName = item.dataset.iconName;
+                selectedIcons.add(`${iconName}-${index}`);
+                item.classList.add('selected');
+            });
+            updateSelectedCount();
+        }
+
+        function clearSelection() {
+            selectedIcons.clear();
+            document.querySelectorAll('.icon-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            updateSelectedCount();
+        }
+
+        function generateSVG(icon = selectedIcon) {
+            if (!icon) return '';
+
+            const fillAttr = customizations.style === 'fill' ? customizations.color : 'none';
+            const strokeAttr = customizations.style === 'stroke' ? customizations.color : 'none';
+
+            return `<svg width="${customizations.size}" height="${customizations.size}" viewBox="0 0 24 24" fill="${fillAttr}" stroke="${strokeAttr}" stroke-width="${customizations.strokeWidth}" stroke-linecap="round" stroke-linejoin="round">
+    <path d="${icon.path}"></path>
+</svg>`;
+        }
+
+        function downloadSVG() {
+            if (!selectedIcon) {
+                alert('Please select an icon first!');
+                return;
+            }
+
+            const svgContent = generateSVG();
+            const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${selectedIcon.name}-${customizations.size}px.svg`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function copyToClipboard() {
+            if (!selectedIcon) {
+                alert('Please select an icon first!');
+                return;
+            }
+
+            const svgContent = generateSVG();
+            navigator.clipboard.writeText(svgContent).then(() => {
+                // Show temporary success message
+                const btn = event.target;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20,6 9,17 4,12"></polyline>
+                </svg>Copied!`;
+                btn.style.background = 'var(--success)';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(() => {
+                alert('Failed to copy to clipboard');
+            });
+        }
+
+        function addToCollection() {
+            if (!selectedIcon) {
+                alert('Please select an icon first!');
+                return;
+            }
+
+            // In a real app, this would save to a database or local storage
+            const collection = JSON.parse(localStorage.getItem('iconCollection') || '[]');
+            const iconData = {
+                ...selectedIcon,
+                customizations: { ...customizations },
+                timestamp: Date.now()
+            };
+            
+            collection.push(iconData);
+            localStorage.setItem('iconCollection', JSON.stringify(collection));
+
+            // Show success feedback
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20,6 9,17 4,12"></polyline>
+            </svg>Added!`;
+            btn.style.background = 'var(--success)';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+            }, 2000);
+        }
+
+        function exportCollection() {
+            if (selectedIcons.size === 0) {
+                alert('Please select some icons first!');
+                return;
+            }
+
+            const zip = new JSZip();
+            const selectedElements = Array.from(selectedIcons).map(iconId => {
+                const iconName = iconId.split('-')[0];
+                return Object.values(iconLibrary).flat().find(icon => icon.name === iconName);
+            }).filter(Boolean);
+
+            selectedElements.forEach(icon => {
+                const svgContent = generateSVG(icon);
+                zip.file(`${icon.name}-${customizations.size}px.svg`, svgContent);
+            });
+
+            zip.generateAsync({ type: 'blob' }).then(content => {
+                const url = URL.createObjectURL(content);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `icon-collection-${Date.now()}.zip`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        // Initialize the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+
+    <!-- JSZip for collection export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</body>
+</html>
