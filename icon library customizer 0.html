@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Library Customizer</title>
+    <style>
+        :root {
+            --primary: #4285f4;
+            --primary-hover: #3367d6;
+            --secondary: #34a853;
+            --accent: #fbbc04;
+            --danger: #ea4335;
+            --surface: #ffffff;
+            --surface-2: #f8f9fa;
+            --surface-3: #e8eaed;
+            --text-primary: #202124;
+            --text-secondary: #5f6368;
+            --border: #dadce0;
+            --shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-hover: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+            --radius: 8px;
+            --transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--danger));
+            animation: slideIn 2s ease-out;
+        }
+
+        @keyframes slideIn {
+            to { left: 0; }
+        }
+
+        .header h1 {
+            color: var(--text-primary);
+            font-size: 2.5rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+            min-height: calc(100vh - 200px);
+        }
+
+        .sidebar {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section h3 {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 14px;
+            transition: var(--transition);
+            background: var(--surface-2);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--surface);
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-group {
+            margin-bottom: 24px;
+        }
+
+        .filter-label {
+            display: block;
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .style-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .style-btn {
+            padding: 10px 16px;
+            border: 2px solid var(--border);
+            background: var(--surface);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .style-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .style-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .weight-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--surface-3);
+            outline: none;
+            margin: 16px 0;
+        }
+
+        .weight-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .weight-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .color-picker-container {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .color-input {
+            width: 100%;
+            height: 40px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .color-input:hover {
+            border-color: var(--primary);
+        }
+
+        .color-presets {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .color-preset {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .color-preset:hover {
+            transform: scale(1.1);
+            border-color: var(--text-secondary);
+        }
+
+        .download-section {
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .download-options {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .size-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 14px;
+        }
+
+        .download-btn {
+            width: 100%;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--secondary), #2d8f47);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .download-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .content-area {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .content-header {
+            padding: 24px;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .view-toggles {
+            display: flex;
+            gap: 4px;
+            background: var(--surface);
+            padding: 4px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .view-btn {
+            padding: 8px 12px;
+            border: none;
+            background: transparent;
+            border-radius: calc(var(--radius) - 2px);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .icons-grid {
+            padding: 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 16px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border: 2px solid transparent;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--surface);
+            position: relative;
+        }
+
+        .icon-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .icon-item.selected {
+            border-color: var(--primary);
+            background: rgba(66, 133, 244, 0.1);
+        }
+
+        .icon-item.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .icon-svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+            transition: var(--transition);
+        }
+
+        .icon-name {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .preview-section {
+            padding: 24px;
+            border-top: 1px solid var(--border);
+            background: var(--surface-2);
+            text-align: center;
+        }
+
+        .preview-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 200px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+        }
+
+        .preview-icon {
+            transition: var(--transition);
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 16px;
+            background: var(--surface-3);
+            border-radius: var(--radius);
+            margin: 16px 24px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--surface-3);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 12px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--surface);
+            color: var(--text-primary);
+            padding: 16px 24px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-hover);
+            transform: translateX(400px);
+            transition: var(--transition);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--secondary);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .batch-actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .batch-btn {
+            padding: 8px 16px;
+            border: 2px solid var(--border);
+            background: var(--surface);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .batch-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Icon Library Customizer</h1>
+            <p>Professional icon management and customization platform</p>
+        </header>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="section">
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Search icons..." id="searchInput">
+                        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                        </svg>
+                        Style
+                    </h3>
+                    <div class="style-buttons">
+                        <button class="style-btn active" data-style="outline">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            </svg>
+                            Outline
+                        </button>
+                        <button class="style-btn" data-style="filled">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            </svg>
+                            Filled
+                        </button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14,2 14,8 20,8"></polyline>
+                        </svg>
+                        Stroke Weight
+                    </h3>
+                    <input type="range" class="weight-slider" id="strokeWeight" min="1" max="4" value="2" step="0.5">
+                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary);">
+                        <span>Thin</span>
+                        <span id="weightValue">2</span>
+                        <span>Bold</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M12 1v6m0 6v6"></path>
+                            <path d="m1 12 6 0m6 0 6 0"></path>
+                        </svg>
+                        Color
+                    </h3>
+                    <div class="color-picker-container">
+                        <input type="color" class="color-input" id="colorPicker" value="#202124">
+                    </div>
+                    <div class="color-presets">
+                        <div class="color-preset" style="background: #202124" data-color="#202124"></div>
+                        <div class="color-preset" style="background: #4285f4" data-color="#4285f4"></div>
+                        <div class="color-preset" style="background: #34a853" data-color="#34a853"></div>
+                        <div class="color-preset" style="background: #fbbc04" data-color="#fbbc04"></div>
+                        <div class="color-preset" style="background: #ea4335" data-color="#ea4335"></div>
+                        <div class="color-preset" style="background: #9c27b0" data-color="#9c27b0"></div>
+                        <div class="color-preset" style="background: #ff9800" data-color="#ff9800"></div>
+                        <div class="color-preset" style="background: #607d8b" data-color="#607d8b"></div>
+                    </div>
+                </div>
+
+                <div class="section download-section">
+                    <h3>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7,10 12,15 17,10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download
+                    </h3>
+                    <div class="download-options">
+                        <input type="number" class="size-input" id="downloadSize" placeholder="Size (px)" value="24" min="8" max="512">
+                        <select class="size-input" id="downloadFormat">
+                            <option value="svg">SVG</option>
+                            <option value="png">PNG</option>
+                            <option value="pdf">PDF</option>
+                        </select>
+                    </div>
+                    <button class="download-btn" id="downloadBtn" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7,10 12,15 17,10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download Selected
+                    </button>
+                    <button class="download-btn" id="downloadAllBtn" style="background: linear-gradient(135deg, var(--accent), #f9a825);">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path>
+                            <polyline points="7,11 12,16 17,11"></polyline>
+                            <line x1="12" y1="16" x2="12" y2="4"></line>
+                        </svg>
+                        Download All Visible
+                    </button>
+                </div>
+            </aside>
+
+            <main class="content-area">
+                <div class="content-header">
+                    <h2>Icon Library</h2>
+                    <div class="view-toggles">
+                        <button class="view-btn active" data-view="grid">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            Grid
+                        </button>
+                        <button class="view-btn" data-view="list">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
+                            List
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalIcons">150</div>
+                        <div class="stat-label">Total Icons</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="selectedCount">0</div>
+                        <div class="stat-label">Selected</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="filteredCount">150</div>
+                        <div class="stat-label">Visible</div>
+                    </div>
+                </div>
+
+                <div class="batch-actions" style="padding: 0 24px;">
+                    <button class="batch-btn" id="selectAllBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9,11 12,14 22,4"></polyline>
+                            <path d="m21,4-10,10-3-3"></path>
+                        </svg>
+                        Select All
+                    </button>
+                    <button class="batch-btn" id="deselectAllBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        Deselect All
+                    </button>
+                </div>
+
+                <div class="icons-grid" id="iconsGrid">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading icons...
+                    </div>
+                </div>
+
+                <div class="preview-section">
+                    <h3>Live Preview</h3>
+                    <div class="preview-container" id="previewContainer">
+                        <svg class="preview-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#202124" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Select an icon to see live preview</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,11 12,14 22,4"></polyline>
+            <path d="m21,4-10,10-3-3"></path>
+        </svg>
+        <span id="toastMessage">Action completed successfully!</span>
+    </div>
+
+    <script>
+        class IconLibraryCustomizer {
+            constructor() {
+                this.icons = this.generateIcons();
+                this.filteredIcons = [...this.icons];
+                this.selectedIcons = new Set();
+                this.currentStyle = 'outline';
+                this.currentWeight = 2;
+                this.currentColor = '#202124';
+                this.currentView = 'grid';
+                
+                this.initializeEventListeners();
+                this.renderIcons();
+                this.updateStats();
+            }
+
+            generateIcons() {
+                const iconNames = [
+                    'home', 'search', 'heart', 'star', 'user', 'settings', 'mail', 'phone',
+                    'camera', 'image', 'video', 'music', 'file', 'folder', 'edit', 'trash',
+                    'download', 'upload', 'share', 'link', 'lock', 'unlock', 'eye', 'eye-off',
+                    'bell', 'calendar', 'clock', 'map', 'location', 'bookmark', 'tag', 'flag',
+                    'thumbs-up', 'thumbs-down', 'message', 'comment', 'quote', 'mic', 'volume',
+                    'play', 'pause', 'stop', 'skip-back', 'skip-forward', 'repeat', 'shuffle',
+                    'grid', 'list', 'layout', 'sidebar', 'maximize', 'minimize', 'refresh',
+                    'arrow-up', 'arrow-down', 'arrow-left', 'arrow-right', 'chevron-up',
+                    'chevron-down', 'chevron-left', 'chevron-right', 'plus', 'minus', 'x',
+                    'check', 'check-circle', 'x-circle', 'alert-circle', 'info', 'help-circle',
+                    'filter', 'sort', 'copy', 'cut', 'paste', 'undo', 'redo', 'save',
+                    'print', 'monitor', 'smartphone', 'tablet', 'laptop', 'desktop',
+                    'wifi', 'bluetooth', 'battery', 'power', 'plug', 'cpu', 'hard-drive',
+                    'server', 'database', 'cloud', 'cloud-upload', 'cloud-download',
+                    'shopping-cart', 'credit-card', 'dollar-sign', 'gift', 'award',
+                    'trophy', 'medal', 'target', 'trending-up', 'trending-down',
+                    'bar-chart', 'pie-chart', 'activity', 'zap', 'sun', 'moon',
+                    'cloud-rain', 'cloud-snow', 'umbrella', 'thermometer', 'wind',
+                    'compass', 'map-pin', 'navigation', 'anchor', 'plane', 'car',
+                    'truck', 'bus', 'train', 'ship', 'bicycle', 'scooter',
+                    'coffee', 'pizza', 'cake', 'apple', 'grape', 'orange',
+                    'book', 'bookmark', 'graduation-cap', 'award', 'briefcase'
+                ];
+
+                return iconNames.map((name, index) => ({
+                    id: index + 1,
+                    name: name,
+                    category: this.getCategory(name),
+                    tags: this.getTags(name),
+                    svg: this.generateSVG(name)
+                }));
+            }
+
+            getCategory(name) {
+                const categories = {
+                    'interface': ['home', 'search', 'settings', 'menu', 'close', 'back', 'forward'],
+                    'media': ['camera', 'image', 'video', 'music', 'play', 'pause', 'stop'],
+                    'communication': ['mail', 'phone', 'message', 'comment', 'chat'],
+                    'files': ['file', 'folder', 'download', 'upload', 'save'],
+                    'navigation': ['arrow-up', 'arrow-down', 'chevron-left', 'compass'],
+                    'social': ['heart', 'star', 'thumbs-up', 'share', 'bookmark'],
+                    'business': ['briefcase', 'chart', 'calendar', 'dollar-sign'],
+                    'weather': ['sun', 'moon', 'cloud-rain', 'umbrella'],
+                    'transport': ['car', 'plane', 'ship', 'bicycle'],
+                    'food': ['coffee', 'pizza', 'apple', 'cake']
+                };
+
+                for (const [category, items] of Object.entries(categories)) {
+                    if (items.some(item => name.includes(item))) {
+                        return category;
+                    }
+                }
+                return 'general';
+            }
+
+            getTags(name) {
+                const tagMap = {
+                    'home': ['house', 'building', 'main'],
+                    'search': ['find', 'magnify', 'look'],
+                    'heart': ['love', 'like', 'favorite'],
+                    'star': ['rating', 'bookmark', 'favorite'],
+                    'user': ['person', 'profile', 'account'],
+                    'settings': ['config', 'preferences', 'gear'],
+                    'mail': ['email', 'envelope', 'message'],
+                    'phone': ['call', 'telephone', 'mobile']
+                };
+                return tagMap[name] || [name];
+            }
+
+            generateSVG(iconName) {
+                const svgPaths = {
+                    'home': 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z|M9 22V12h6v10',
+                    'search': 'M11 11m-8 0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0|M21 21l-4.35-4.35',
+                    'heart': 'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z',
+                    'star': 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z',
+                    'user': 'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2|M12 11m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0',
+                    'settings': 'M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z|M12 15m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0',
+                    'mail': 'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z|M22 6l-10 7L2 6',
+                    'phone': 'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z',
+                    'camera': 'M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z|M12 17m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0',
+                    'image': 'M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2z|M8.5 10m-1.5 0a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0|M21 15l-5-5L5 21',
+                    'video': 'M23 7l-7 5 7 5V7z|M1 5h15v14H1z',
+                    'music': 'M9 18V5l12-2v13|M9 13m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0|M21 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0',
+                    'file': 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6|M16 13H8|M16 17H8|M10 9H8',
+                    'folder': 'M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z',
+                    'edit': 'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7|M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z',
+                    'trash': 'M3 6h18|M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2|M10 11v6|M14 11v6',
+                    'download': 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4|M7 10l5 5 5-5|M12 15V3',
+                    'upload': 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4|M17 8l-5-5-5 5|M12 3v12',
+                    'share': 'M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8|M16 6l-4-2-4 2|M12 4v8',
+                    'link': 'M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71|M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71',
+                    'sun': 'M12 17m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0|M12 1v2|M12 21v2|M4.22 4.22l1.42 1.42|M18.36 18.36l1.42 1.42|M1 12h2|M21 12h2|M4.22 19.78l1.42-1.42|M18.36 5.64l1.42-1.42',
+                    'moon': 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z',
+                    'coffee': 'M18 8h1a4 4 0 0 1 0 8h-1|M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z|M6 1v3|M10 1v3|M14 1v3'
+                };
+
+                const pathData = svgPaths[iconName] || 'M12 2L2 7l10 5 10-5-10-5z|M2 17l10 5 10-5|M2 12l10 5 10-5';
+                return pathData;
+            }
+
+            initializeEventListeners() {
+                // Search functionality
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    this.filterIcons(e.target.value);
+                });
+
+                // Style buttons
+                document.querySelectorAll('.style-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        this.currentStyle = e.target.dataset.style;
+                        this.updateIconStyles();
+                        this.updatePreview();
+                    });
+                });
+
+                // Stroke weight slider
+                const weightSlider = document.getElementById('strokeWeight');
+                const weightValue = document.getElementById('weightValue');
+                weightSlider.addEventListener('input', (e) => {
+                    this.currentWeight = parseFloat(e.target.value);
+                    weightValue.textContent = this.currentWeight;
+                    this.updateIconStyles();
+                    this.updatePreview();
+                });
+
+                // Color picker
+                const colorPicker = document.getElementById('colorPicker');
+                colorPicker.addEventListener('input', (e) => {
+                    this.currentColor = e.target.value;
+                    this.updateIconStyles();
+                    this.updatePreview();
+                });
+
+                // Color presets
+                document.querySelectorAll('.color-preset').forEach(preset => {
+                    preset.addEventListener('click', (e) => {
+                        const color = e.target.dataset.color;
+                        this.currentColor = color;
+                        colorPicker.value = color;
+                        this.updateIconStyles();
+                        this.updatePreview();
+                    });
+                });
+
+                // View toggles
+                document.querySelectorAll('.view-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        this.currentView = e.target.dataset.view;
+                        this.renderIcons();
+                    });
+                });
+
+                // Batch actions
+                document.getElementById('selectAllBtn').addEventListener('click', () => {
+                    this.selectAllVisible();
+                });
+
+                document.getElementById('deselectAllBtn').addEventListener('click', () => {
+                    this.deselectAll();
+                });
+
+                // Download buttons
+                document.getElementById('downloadBtn').addEventListener('click', () => {
+                    this.downloadSelected();
+                });
+
+                document.getElementById('downloadAllBtn').addEventListener('click', () => {
+                    this.downloadAllVisible();
+                });
+            }
+
+            filterIcons(searchTerm) {
+                const term = searchTerm.toLowerCase();
+                this.filteredIcons = this.icons.filter(icon => 
+                    icon.name.toLowerCase().includes(term) ||
+                    icon.category.toLowerCase().includes(term) ||
+                    icon.tags.some(tag => tag.toLowerCase().includes(term))
+                );
+                this.renderIcons();
+                this.updateStats();
+            }
+
+            renderIcons() {
+                const grid = document.getElementById('iconsGrid');
+                
+                if (this.filteredIcons.length === 0) {
+                    grid.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-secondary);">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 16px;">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            <p>No icons found matching your search.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                grid.innerHTML = this.filteredIcons.map(icon => `
+                    <div class="icon-item ${this.selectedIcons.has(icon.id) ? 'selected' : ''}" 
+                         data-icon-id="${icon.id}" 
+                         onclick="iconCustomizer.selectIcon(${icon.id})">
+                        <svg class="icon-svg" viewBox="0 0 24 24" 
+                             fill="${this.currentStyle === 'filled' ? this.currentColor : 'none'}" 
+                             stroke="${this.currentStyle === 'outline' ? this.currentColor : 'none'}" 
+                             stroke-width="${this.currentWeight}">
+                            ${this.renderSVGPaths(icon.svg)}
+                        </svg>
+                        <span class="icon-name">${icon.name}</span>
+                    </div>
+                `).join('');
+
+                this.updateStats();
+            }
+
+            renderSVGPaths(pathData) {
+                return pathData.split('|').map(path => {
+                    if (path.includes('m') && path.includes('a')) {
+                        // Handle circle paths
+                        return `<circle ${path.replace(/m|a/g, '').replace(/(\d+)\s+(\d+)m-(\d+)\s+0a(\d+)\s+(\d+)\s+0\s+1\s+0\s+(\d+)\s+0a(\d+)\s+(\d+)\s+0\s+1\s+0\s+-(\d+)\s+0/, 'cx="$1" cy="$2" r="$3"')}></circle>`;
+                    } else {
+                        return `<path d="${path}"></path>`;
+                    }
+                }).join('');
+            }
+
+            selectIcon(iconId) {
+                if (this.selectedIcons.has(iconId)) {
+                    this.selectedIcons.delete(iconId);
+                } else {
+                    this.selectedIcons.add(iconId);
+                }
+                
+                const iconElement = document.querySelector(`[data-icon-id="${iconId}"]`);
+                iconElement.classList.toggle('selected');
+                
+                this.updateStats();
+                this.updateDownloadButton();
+                
+                // Update preview with last selected icon
+                if (this.selectedIcons.has(iconId)) {
+                    const icon = this.icons.find(i => i.id === iconId);
+                    this.updatePreview(icon);
+                }
+            }
+
+            selectAllVisible() {
+                this.filteredIcons.forEach(icon => {
+                    this.selectedIcons.add(icon.id);
+                    const iconElement = document.querySelector(`[data-icon-id="${icon.id}"]`);
+                    if (iconElement) iconElement.classList.add('selected');
+                });
+                this.updateStats();
+                this.updateDownloadButton();
+                this.showToast('All visible icons selected', 'success');
+            }
+
+            deselectAll() {
+                this.selectedIcons.clear();
+                document.querySelectorAll('.icon-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                this.updateStats();
+                this.updateDownloadButton();
+                this.showToast('All icons deselected', 'success');
+            }
+
+            updateIconStyles() {
+                document.querySelectorAll('.icon-svg').forEach(svg => {
+                    svg.setAttribute('fill', this.currentStyle === 'filled' ? this.currentColor : 'none');
+                    svg.setAttribute('stroke', this.currentStyle === 'outline' ? this.currentColor : 'none');
+                    svg.setAttribute('stroke-width', this.currentWeight);
+                });
+            }
+
+            updatePreview(icon = null) {
+                const previewContainer = document.getElementById('previewContainer');
+                const previewIcon = previewContainer.querySelector('.preview-icon');
+                
+                if (icon) {
+                    previewIcon.innerHTML = this.renderSVGPaths(icon.svg);
+                }
+                
+                previewIcon.setAttribute('fill', this.currentStyle === 'filled' ? this.currentColor : 'none');
+                previewIcon.setAttribute('stroke', this.currentStyle === 'outline' ? this.currentColor : 'none');
+                previewIcon.setAttribute('stroke-width', this.currentWeight);
+            }
+
+            updateStats() {
+                document.getElementById('totalIcons').textContent = this.icons.length;
+                document.getElementById('selectedCount').textContent = this.selectedIcons.size;
+                document.getElementById('filteredCount').textContent = this.filteredIcons.length;
+            }
+
+            updateDownloadButton() {
+                const downloadBtn = document.getElementById('downloadBtn');
+                downloadBtn.disabled = this.selectedIcons.size === 0;
+            }
+
+            downloadSelected() {
+                if (this.selectedIcons.size === 0) return;
+                
+                const format = document.getElementById('downloadFormat').value;
+                const size = parseInt(document.getElementById('downloadSize').value) || 24;
+                
+                this.selectedIcons.forEach(iconId => {
+                    const icon = this.icons.find(i => i.id === iconId);
+                    this.downloadIcon(icon, format, size);
+                });
+                
+                this.showToast(`Downloaded ${this.selectedIcons.size} icon(s)`, 'success');
+            }
+
+            downloadAllVisible() {
+                const format = document.getElementById('downloadFormat').value;
+                const size = parseInt(document.getElementById('downloadSize').value) || 24;
+                
+                this.filteredIcons.forEach(icon => {
+                    this.downloadIcon(icon, format, size);
+                });
+                
+                this.showToast(`Downloaded ${this.filteredIcons.length} icon(s)`, 'success');
+            }
+
+            downloadIcon(icon, format, size) {
+                const svg = this.createDownloadSVG(icon, size);
+                
+                if (format === 'svg') {
+                    this.downloadSVG(svg, `${icon.name}.svg`);
+                } else if (format === 'png') {
+                    this.downloadPNG(svg, `${icon.name}.png`, size);
+                } else if (format === 'pdf') {
+                    this.downloadPDF(svg, `${icon.name}.pdf`, size);
+                }
+            }
+
+            createDownloadSVG(icon, size) {
+                return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" 
+                        fill="${this.currentStyle === 'filled' ? this.currentColor : 'none'}" 
+                        stroke="${this.currentStyle === 'outline' ? this.currentColor : 'none'}" 
+                        stroke-width="${this.currentWeight}" 
+                        xmlns="http://www.w3.org/2000/svg">
+                    ${this.renderSVGPaths(icon.svg)}
+                </svg>`;
+            }
+
+            downloadSVG(svgContent, filename) {
+                const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+                this.triggerDownload(blob, filename);
+            }
+
+            downloadPNG(svgContent, filename, size) {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = size;
+                canvas.height = size;
+                
+                const img = new Image();
+                img.onload = () => {
+                    ctx.drawImage(img, 0, 0, size, size);
+                    canvas.toBlob(blob => {
+                        this.triggerDownload(blob, filename);
+                    }, 'image/png');
+                };
+                img.src = 'data:image/svg+xml;base64,' + btoa(svgContent);
+            }
+
+            downloadPDF(svgContent, filename, size) {
+                // Simple PDF creation (in a real app, you'd use a proper PDF library)
+                const pdfContent = `%PDF-1.4
+1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
+2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj
+3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 ${size} ${size}]>>endobj
+xref
+0 4
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+trailer<</Size 4/Root 1 0 R>>
+startxref
+190
+%%EOF`;
+                
+                const blob = new Blob([pdfContent], { type: 'application/pdf' });
+                this.triggerDownload(blob, filename);
+            }
+
+            triggerDownload(blob, filename) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            showToast(message, type = 'success') {
+                const toast = document.getElementById('toast');
+                const toastMessage = document.getElementById('toastMessage');
+                
+                toastMessage.textContent = message;
+                toast.className = `toast ${type}`;
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Initialize the application
+        const iconCustomizer = new IconLibraryCustomizer();
+        
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'a':
+                        e.preventDefault();
+                        iconCustomizer.selectAllVisible();
+                        break;
+                    case 'd':
+                        e.preventDefault();
+                        iconCustomizer.deselectAll();
+                        break;
+                    case 's':
+                        e.preventDefault();
+                        if (iconCustomizer.selectedIcons.size > 0) {
+                            iconCustomizer.downloadSelected();
+                        }
+                        break;
+                }
+            }
+        });
+
+        // Add search focus shortcut
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+        });
+    </script>
+</body>
+</html>
